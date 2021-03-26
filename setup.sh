@@ -2,7 +2,7 @@
 set -e
 
 echo 'This script is a rough guide only. Please check over it before running. Ctrl-C to exit and read first.'
-read a
+read -p 'Press enter to continue...' a
 
 # Update System
 apt update
@@ -26,6 +26,11 @@ export TERM=xterm-color
 # Install Packages
 apt install postgresql certbot lighttpd
 
+# Disable service while configuring, except postgres as we connect to it for configuration
+systemctl stop lighttpd
+systemctl stop matrix-synapse
+systemctl start postgresql
+
 # Collect your TLS certificates using certbot
 certbot certonly --standalone
 # Ensure the domain is pointing at this server and port 80 is open
@@ -33,7 +38,8 @@ certbot certonly --standalone
 
 # Modify the lighttpd config for the reverse proxy
 echo 'Starting vim to modify the lighttpd config. Replace <domain> with the path created by certbot. Should be the domain name, but check it in case.'
-read a
+read -p 'Press enter to continue...' a
+
 vim lighttpd.conf
 echo "Copying config to /etc/lighttpd/lighttpd.conf"
 cp lighttpd.conf /etc/lighttpd/lighttpd.conf
@@ -48,7 +54,8 @@ sudo -u postgres sh postgres.sh
 # Configure synapse
 # Please check through the config rather than blindly using it. It is merely a starting point
 echo "Starting vim to modify the matrix homeserver.yaml configuration. Replace <password> with the Postgres databse password you chose. Check over the whole configuration thoroughly."
-read a
+read -p 'Press enter to continue...' a
+
 vim homeserver.yaml
 cp homeserver.yaml /etc/matrix-synapse/homeserver.yaml
 chown matrix-synapse:matrix:synapse /etc/matrix-synapse/homeserver.yaml
