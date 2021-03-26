@@ -59,7 +59,7 @@ read -p 'Press enter to continue...' a
 
 vim homeserver.yaml
 cp homeserver.yaml /etc/matrix-synapse/homeserver.yaml
-chown matrix-synapse:matrix:synapse /etc/matrix-synapse/homeserver.yaml
+chown matrix-synapse:matrix-synapse /etc/matrix-synapse/homeserver.yaml
 chmod 770 /etc/matrix-synapse/homeserver.yaml
 
 # Enable and start the systemd services
