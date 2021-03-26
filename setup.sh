@@ -49,6 +49,7 @@ chmod 644 /etc/lighttpd/lighttpd.conf
 # Setup the Postgres database
 # Please check the script
 # https://github.com/matrix-org/synapse/blob/develop/docs/postgres.md
+chmod -R a+r postgres.sh
 sudo -u postgres sh postgres.sh
 
 # Configure synapse

@@ -1,5 +1,6 @@
 #!/bin/sh
 
+echo 'Creating a user for the Postgres database. Choose a password.'
 createuser --pwprompt synapse_user
 
 # See https://github.com/matrix-org/synapse/blob/develop/docs/postgres.md
